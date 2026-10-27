@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!-- Tienda generada con Harvys, asistente de e-commerce creado por el Profesor Harvey Sanabria -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horizon Perfums — Encuentra tu esencia, deja tu huella.</title>
+<meta name="description" content="Perfumes masculinos tipo réplica, inspirados en fragancias reconocidas. Variedad de aromas a precios accesibles y atención personalizada. No son perfumes originales.">
+<meta name="generator" content="Harvys — asistente de e-commerce del Profesor Harvey Sanabria">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="anim-baja tarj-borde modo-oscuro">
+
+<!-- MODAL PAGO -->
+<div class="modal-overlay" id="modal-pago" onclick="modalClickFuera(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-head"><h3>Confirmar pago</h3><button class="modal-cerrar" onclick="cerrarModal()" aria-label="Cerrar">✕</button></div>
+    <div class="modal-body">
+      <div class="modal-total"><span class="tl">Total a pagar</span><span class="tm" id="modal-total-monto">$0</span></div>
+      <div class="pago-metodos" id="pago-metodos"></div>
+      <div class="pago-datos" id="pago-datos">
+        <div class="pd-label">Transferir a este número</div>
+        <div class="pd-numero" id="pd-numero"></div>
+        <div class="pd-nombre" id="pd-nombre"></div>
+        <button class="btn-copiar" onclick="copiarNumero()">📋 Copiar número</button>
+      </div>
+      <div class="pasos">
+        <div class="paso"><div class="paso-num">1</div><div class="paso-txt" id="paso-1"></div></div>
+        <div class="paso"><div class="paso-num">2</div><div class="paso-txt">Toca <strong>"Confirmar y enviar"</strong> — se abre WhatsApp con tu pedido</div></div>
+        <div class="paso"><div class="paso-num">3</div><div class="paso-txt" id="paso-3"></div></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <a href="#" target="_blank" rel="noopener" class="btn-wsp" onclick="return prepararWsp(this)">✅ Confirmar y enviar por WhatsApp</a>
+      <button class="btn-seguir" onclick="cerrarModal()">← Seguir comprando</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
+
+<!-- VISOR DE FOTOS -->
+<div class="visor" id="visor" role="dialog" aria-modal="true" aria-label="Foto del producto">
+  <figure class="visor-caja">
+    <button class="visor-cerrar" aria-label="Cerrar">✕</button>
+    <div class="visor-foto" id="visor-foto"><img id="visor-img" alt=""></div>
+    <figcaption><strong id="visor-nombre"></strong><span id="visor-precio"></span></figcaption>
+    <div class="visor-ayuda">Toca o haz clic en la foto para ampliarla más</div>
+  </figure>
+</div>
+
+<button class="carrito-fab" onclick="toggleCarrito()" id="fab" aria-label="Abrir carrito">🛒<span class="carrito-badge" id="badge">0</span></button>
+
+<div class="carrito-panel" id="panel-carrito">
+  <div class="panel-header"><h3>Tu selección de fragancias</h3><button class="btn-cerrar" onclick="cerrarCarrito()" aria-label="Cerrar carrito">✕</button></div>
+  <ul id="lista-carrito"></ul>
+  <div class="panel-footer">
+    <div class="total-row"><span class="total-lbl">Total</span><span class="total-monto" id="total">$0</span></div>
+    <div class="panel-btns"><button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar</button><button class="btn-pagar" onclick="pagar()">Consultar pedido por WhatsApp</button></div>
+  </div>
+</div>
+
+<!-- ASISTENTE DE LA TIENDA (responde con los datos de esta tienda) -->
+<span class="as-aviso" id="as-aviso">¿Te ayudo? 👋</span>
+<button class="as-burbuja" id="as-burbuja" aria-label="Abrir el asistente de la tienda"><svg class="as-robot" viewBox="0 0 64 64" aria-hidden="true">
+      <line x1="32" y1="5" x2="32" y2="14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <circle class="as-antena" cx="32" cy="5" r="4" fill="currentColor"/>
+      <rect x="4" y="27" width="6" height="12" rx="3" fill="currentColor"/>
+      <rect x="54" y="27" width="6" height="12" rx="3" fill="currentColor"/>
+      <rect x="10" y="14" width="44" height="38" rx="15" fill="currentColor"/>
+      <rect x="16" y="21" width="32" height="20" rx="10" fill="var(--as-cara)"/>
+      <circle class="as-ojo" cx="25" cy="31" r="4" fill="currentColor"/>
+      <circle class="as-ojo" cx="39" cy="31" r="4" fill="currentColor"/>
+      <path d="M26 45q6 4 12 0" stroke="var(--as-cara)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></button>
+<div class="as-panel" id="as-panel" role="dialog" aria-label="Esencia">
+  <div class="as-cabecera">
+    <div class="as-avatar"><svg class="as-robot" viewBox="0 0 64 64" aria-hidden="true">
+      <line x1="32" y1="5" x2="32" y2="14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <circle class="as-antena" cx="32" cy="5" r="4" fill="currentColor"/>
+      <rect x="4" y="27" width="6" height="12" rx="3" fill="currentColor"/>
+      <rect x="54" y="27" width="6" height="12" rx="3" fill="currentColor"/>
+      <rect x="10" y="14" width="44" height="38" rx="15" fill="currentColor"/>
+      <rect x="16" y="21" width="32" height="20" rx="10" fill="var(--as-cara)"/>
+      <circle class="as-ojo" cx="25" cy="31" r="4" fill="currentColor"/>
+      <circle class="as-ojo" cx="39" cy="31" r="4" fill="currentColor"/>
+      <path d="M26 45q6 4 12 0" stroke="var(--as-cara)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+    <div><strong>Esencia</strong><small><i></i> En línea</small></div>
+    <button id="as-cerrar" aria-label="Cerrar el asistente">✕</button>
+  </div>
+  <div class="as-mensajes" id="as-mensajes"></div>
+  <div class="as-chips" id="as-chips"></div>
+  <form class="as-form" id="as-form">
+    <input id="as-input" placeholder="Escribe tu pregunta…" autocomplete="off" aria-label="Tu pregunta">
+    <button type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
+  </form>
+</div>
+
+<header class="hero hero-centrado">
+  <div class="hero-bg efecto-brillo"></div>
+  <div class="hero-content">
+    <div>
+      
+      <div class="hero-badge">Perfumería masculina · Bogotá</div>
+      <h1>Horizon<span>Perfums</span></h1>
+      <p class="hero-sub">Encuentra tu esencia, deja tu huella. Explora perfumes masculinos tipo réplica con atención personalizada. No son perfumes originales.</p>
+      <a href="#catalogo" class="btn-hero">Explorar fragancias
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="hero-stats"><div class="hero-stat"><div class="num">10</div><div class="lbl">Referencias tipo réplica</div></div><div class="hero-stat"><div class="num">Bogotá</div><div class="lbl">Y envíos nacionales</div></div><div class="hero-stat"><div class="num">WhatsApp</div><div class="lbl">Atención personalizada</div></div></div>
+    </div>
+    </div>
+  <div class="hero-scroll"><div></div></div>
+</header>
+
+<section class="banner-sec">
+  <div class="banner-glow"></div>
+  <div class="banner-content">
+    <div class="sec-label">Tu aroma, tu estilo</div>
+    <h2>Una esencia para <em>dejar huella</em></h2>
+    <p>Descubre referencias masculinas tipo réplica a precios accesibles, con presentaciones de 100, 50 y 25 ml. Confirma por WhatsApp el precio de la presentación elegida antes de finalizar tu pedido. Domicilios en Bogotá y alrededores y envíos nacionales; tiempos y costos por confirmar.</p>
+    <div class="banner-chips"><span class="chip">Perfumes tipo réplica</span><span class="chip">Nequi · Efectivo · Llave</span><span class="chip">Asesoría por WhatsApp</span><span class="chip">Envíos nacionales</span></div>
+  </div>
+</section>
+
+<div class="filtros-wrap" id="filtros-bar">
+  <div class="busqueda-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+    <input type="text" id="buscador" placeholder="Buscar producto..." oninput="filtrarBusqueda()">
+  </div>
+</div>
+<section class="catalogo-wrap" id="catalogo">
+  <div class="catalogo-header">
+    <div><div class="sec-label">Colección masculina · Réplicas</div><div class="sec-title">Encuentra tu fragancia</div></div>
+    <div class="catalogo-count" id="cont-count"></div>
+  </div>
+  <div id="productos"></div>
+</section>
+
+<section class="beneficios-sec" id="beneficios">
+  <div class="sec-centro"><div class="sec-label">La experiencia Horizon</div><div class="sec-title">Estilo con atención cercana</div></div>
+  <div class="beneficios-grid">
+    <div class="bcard"><div class="bcard-icono">✨</div><h3>Variedad a precios accesibles</h3><p>Explora distintas referencias masculinas tipo réplica. No se comercializan como perfumes originales.</p></div><div class="bcard"><div class="bcard-icono">💬</div><h3>Atención personalizada</h3><p>Recibe orientación por WhatsApp para elegir según tus gustos y presupuesto.</p></div><div class="bcard"><div class="bcard-icono">🧴</div><h3>Elige tu presentación</h3><p>Presentaciones de 100, 50 y 25 ml. Confirma por WhatsApp el precio correspondiente al tamaño elegido.</p></div><div class="bcard"><div class="bcard-icono">🚚</div><h3>Entregas locales y nacionales</h3><p>Domicilios en Bogotá y alrededores y envíos a otras ciudades. Tiempo y costo por confirmar según ubicación.</p></div>
+  </div>
+</section>
+
+<section class="recs-sec">
+  <div class="sec-label">Explora la colección</div>
+  <div class="sec-title">Fragancias para descubrir</div>
+  <div class="recs-grid" id="recomendados"></div>
+</section>
+
+<section class="top-sec">
+  <div class="sec-label">Favoritos de las votaciones</div>
+  <div class="sec-title">Las esencias más votadas</div>
+  <div class="top-grid" id="top"></div>
+</section>
+
+<section class="duelo-sec">
+  <div class="sec-label">Elige tu referencia favorita</div>
+  <div class="sec-title">¿Qué fragancia prefieres?</div>
+  <div class="duelo-arena" id="duelo"></div>
+  <p class="duelo-info">Vota por la referencia que más te llama la atención y ayúdala a subir en el ranking.</p>
+</section>
+
+<section class="horarios-sec">
+  <div class="sec-label">Estamos para asesorarte</div>
+  <div class="sec-title">Horario de atención</div>
+  <ul class="horarios-lista"><li>🕒 Lunes a viernes, de 9:00 a. m. a 7:00 p. m.</li></ul>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-marca"><h3>Horizon Perfums</h3><p>Horizon Perfums · Perfumes masculinos tipo réplica, no originales. Atención por WhatsApp y Facebook Marketplace. Bogotá y envíos nacionales.</p></div>
+    <div class="footer-col"><h4>Contacto</h4><ul><li><a href="https://wa.me/573202143332" target="_blank" rel="noopener">WhatsApp: +57 3202143332</a></li><li>📍 Bogotá, Colombia</li></ul></div>
+    <div class="footer-col"><h4>Pagos</h4><ul><li>Nequi</li><li>Efectivo</li><li>Llave</li></ul></div>
+    <div class="footer-col"><h4>Categorías</h4><ul><li>Perfumes masculinos · Réplicas</li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Horizon Perfums — Todos los derechos reservados</span>
+    <span>Encuentra tu esencia, deja tu huella.</span>
+  </div>
+  <div class="footer-credito">
+    Creada con <strong>Harvys</strong> · Prof. Harvey Sanabria ·
+    <a href="https://wa.me/573103323843?text=Hola%20Profesor%20Harvey%2C%20vi%20una%20tienda%20creada%20con%20Harvys%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener">WhatsApp 310 332 3843</a>
+  </div>
+</footer>
+
+<!-- Copia del proyecto para volver a abrirlo en Harvys (botón "Abrir"). No la borres. -->
+<script type="application/json" id="harvys-proyecto">{"negocio":{"nombre":"Horizon Perfums","descripcion":"Perfumes masculinos tipo réplica, inspirados en fragancias reconocidas. Variedad de aromas a precios accesibles y atención personalizada. No son perfumes originales.","eslogan":"Encuentra tu esencia, deja tu huella.","ciudad":"Bogotá, Colombia","cobertura":"Domicilios en Bogotá y alrededores; envíos nacionales. Costos y tiempos por confirmar según destino.","whatsapp":"573202143332","instagram":"","facebook":"","tiktok":"","horarios":["Lunes a viernes, de 9:00 a. m. a 7:00 p. m."],"logo":""},"tema":{"nombreEstilo":"Horizon · Borgoña luminoso","modo":"oscuro","colores":{"primario":"#D85A70","textoSobrePrimario":"#190A12","fondo":"#240914","fondoAlterno":"#351020","tarjeta":"#45152A","texto":"#FFFFFF","textoSuave":"#E9CED7","acento":"#E3C59A"},"fuentes":{"titulos":"Cinzel","cuerpo":"Montserrat"},"titulosMayusculas":false,"radio":8,"animaciones":"baja","fondoEfecto":"brillo","hero":"centrado","tarjetas":"borde"},"textos":{"heroEtiqueta":"Perfumería masculina · Bogotá","heroTitulo":"Horizon","heroTituloResaltado":"Perfums","heroSubtitulo":"Encuentra tu esencia, deja tu huella. Explora perfumes masculinos tipo réplica con atención personalizada. No son perfumes originales.","heroBoton":"Explorar fragancias","heroImagen":"","estadisticas":[{"valor":"{productos}","etiqueta":"Referencias tipo réplica"},{"valor":"Bogotá","etiqueta":"Y envíos nacionales"},{"valor":"WhatsApp","etiqueta":"Atención personalizada"}],"bannerEtiqueta":"Tu aroma, tu estilo","bannerTitulo":"Una esencia para","bannerTituloResaltado":"dejar huella","bannerTexto":"Descubre referencias masculinas tipo réplica a precios accesibles, con presentaciones de 100, 50 y 25 ml. Confirma por WhatsApp el precio de la presentación elegida antes de finalizar tu pedido. Domicilios en Bogotá y alrededores y envíos nacionales; tiempos y costos por confirmar.","chips":["Perfumes tipo réplica","Nequi · Efectivo · Llave","Asesoría por WhatsApp","Envíos nacionales"],"catalogoEtiqueta":"Colección masculina · Réplicas","catalogoTitulo":"Encuentra tu fragancia","botonAgregar":"+ Agregar al carrito","beneficiosEtiqueta":"La experiencia Horizon","beneficiosTitulo":"Estilo con atención cercana","recomendadosEtiqueta":"Explora la colección","recomendadosTitulo":"Fragancias para descubrir","topEtiqueta":"Favoritos de las votaciones","topTitulo":"Las esencias más votadas","dueloEtiqueta":"Elige tu referencia favorita","dueloTitulo":"¿Qué fragancia prefieres?","dueloInfo":"Vota por la referencia que más te llama la atención y ayúdala a subir en el ranking.","testimoniosEtiqueta":"Experiencias Horizon","testimoniosTitulo":"Opiniones de nuestros clientes","horariosEtiqueta":"Estamos para asesorarte","horariosTitulo":"Horario de atención","footerTexto":"Horizon Perfums · Perfumes masculinos tipo réplica, no originales. Atención por WhatsApp y Facebook Marketplace. Bogotá y envíos nacionales.","footerFrase":"Encuentra tu esencia, deja tu huella.","carritoTitulo":"Tu selección de fragancias","botonPagar":"Consultar pedido por WhatsApp"},"productos":[{"id":"hp1","nombre":"Valentino Born in Roma · Réplica","precio":120000,"categoria":"Perfumes masculinos · Réplicas","imagen":"foto:uz8qwu","descripcion":"Perfume tipo réplica, no original. Disponible en 100, 50 y 25 ml. Presentación correspondiente al precio publicado: [POR COMPLETAR]. Confirma por WhatsApp el precio del tamaño elegido.","opciones":{"etiqueta":"Presentación","valores":["100 ml","50 ml","25 ml"]},"destacado":false},{"id":"hp2","nombre":"Jean Paul Gaultier Le Male Elixir · Réplica","precio":180000,"categoria":"Perfumes masculinos · Réplicas","imagen":"foto:rp2nf6","descripcion":"Perfume tipo réplica, no original. Disponible en 100, 50 y 25 ml. Presentación correspondiente al precio publicado: [POR COMPLETAR]. Confirma por WhatsApp el precio del tamaño elegido.","opciones":{"etiqueta":"Presentación","valores":["100 ml","50 ml","25 ml"]},"destacado":false},{"id":"hp3","nombre":"Jean Paul Gaultier Le Beau Parfum · Réplica","precio":153000,"categoria":"Perfumes masculinos · Réplicas","imagen":"foto:ttid4x","descripcion":"Perfume tipo réplica, no original. Disponible en 100, 50 y 25 ml. Presentación correspondiente al precio publicado: [POR COMPLETAR]. Confirma por WhatsApp el precio del tamaño elegido.","opciones":{"etiqueta":"Presentación","valores":["100 ml","50 ml","25 ml"]},"destacado":false},{"id":"hp4","nombre":"Dior Sauvage Elixir · Réplica","precio":100000,"categoria":"Perfumes masculinos · Réplicas","imagen":"foto:0q98ro","descripcion":"Perfume tipo réplica, no original. Disponible en 100, 50 y 25 ml. Presentación correspondiente al precio publicado: [POR COMPLETAR]. Confirma por WhatsApp el precio del tamaño elegido.","opciones":{"etiqueta":"Presentación","valores":["100 ml","50 ml","25 ml"]},"destacado":false},{"id":"hp5","nombre":"Afnan 9 PM · Réplica","precio":95000,"categoria":"Perfumes masculinos · Réplicas","imagen":"foto:57entm","descripcion":"Perfume tipo réplica, no original. Disponible en 100, 50 y 25 ml. Presentación correspondiente al precio publicado: [POR COMPLETAR]. Confirma por WhatsApp el precio del tamaño elegido.","opciones":{"etiqueta":"Presentación","valores":["100 ml","50 ml","25 ml"]},"destacado":false},{"id":"hp6","nombre":"Carolina Herrera 212 VIP Men · Réplica","precio":110000,"categoria":"Perfumes masculinos · Réplicas","imagen":"foto:fssdka","descripcion":"Perfume tipo réplica, no original. Disponible en 100, 50 y 25 ml. Presentación correspondiente al precio publicado: [POR COMPLETAR]. Confirma por WhatsApp el precio del tamaño elegido.","opciones":{"etiqueta":"Presentación","valores":["100 ml","50 ml","25 ml"]},"destacado":false},{"id":"hp7","nombre":"King Bharara · Réplica","precio":80000,"categoria":"Perfumes masculinos · Réplicas","imagen":"foto:qrayrx","descripcion":"Perfume tipo réplica, no original. Nombre registrado según la entrevista. Disponible en 100, 50 y 25 ml. Presentación correspondiente al precio publicado: [POR COMPLETAR]. Confirma por WhatsApp el precio del tamaño elegido.","opciones":{"etiqueta":"Presentación","valores":["100 ml","50 ml","25 ml"]},"destacado":false},{"id":"hp8","nombre":"Odyssey Mandarin Sky · Réplica","precio":90000,"categoria":"Perfumes masculinos · Réplicas","imagen":"foto:su869p","descripcion":"Perfume tipo réplica, no original. Disponible en 100, 50 y 25 ml. Presentación correspondiente al precio publicado: [POR COMPLETAR]. Confirma por WhatsApp el precio del tamaño elegido.","opciones":{"etiqueta":"Presentación","valores":["100 ml","50 ml","25 ml"]},"destacado":false},{"id":"hp9","nombre":"Louis Vuitton Homme Nomade · Réplica","precio":100000,"categoria":"Perfumes masculinos · Réplicas","imagen":"foto:z8h6bl","descripcion":"Perfume tipo réplica, no original. Nombre registrado según la entrevista. Disponible en 100, 50 y 25 ml. Presentación correspondiente al precio publicado: [POR COMPLETAR]. Confirma por WhatsApp el precio del tamaño elegido.","opciones":{"etiqueta":"Presentación","valores":["100 ml","50 ml","25 ml"]},"destacado":false},{"id":"hp10","nombre":"Khamrah de Lattafa · Réplica","precio":120000,"categoria":"Perfumes masculinos · Réplicas","imagen":"foto:nwb6rp","descripcion":"Perfume tipo réplica, no original. Disponible en 100, 50 y 25 ml. Presentación correspondiente al precio publicado: [POR COMPLETAR]. Confirma por WhatsApp el precio del tamaño elegido.","opciones":{"etiqueta":"Presentación","valores":["100 ml","50 ml","25 ml"]},"destacado":false}],"beneficios":[{"icono":"✨","titulo":"Variedad a precios accesibles","texto":"Explora distintas referencias masculinas tipo réplica. No se comercializan como perfumes originales."},{"icono":"💬","titulo":"Atención personalizada","texto":"Recibe orientación por WhatsApp para elegir según tus gustos y presupuesto."},{"icono":"🧴","titulo":"Elige tu presentación","texto":"Presentaciones de 100, 50 y 25 ml. Confirma por WhatsApp el precio correspondiente al tamaño elegido."},{"icono":"🚚","titulo":"Entregas locales y nacionales","texto":"Domicilios en Bogotá y alrededores y envíos a otras ciudades. Tiempo y costo por confirmar según ubicación."}],"testimonios":[],"pagos":{"metodos":[{"nombre":"Nequi","icono":"💜","tipo":"transferencia"},{"nombre":"Efectivo","icono":"💵","tipo":"efectivo"},{"nombre":"Llave","icono":"🔑","tipo":"transferencia"}],"numeroTransferencia":"3137287536","titular":"Alejandro Quiros","contraentregaDetalle":"No disponible. Llave, titular y condiciones del pago en efectivo: [POR COMPLETAR]."},"backend":{"url":"https://script.google.com/macros/s/AKfycby-SaVs_-zpmdbt949k2mKS7u6KlVFgjTN4_FCBhQWZPU1CqK1yyBt1X9m8DxIDJias/exec"},"asistente":{"activo":true,"nombre":"Esencia","saludo":"¡Hola! Soy Esencia, tu asistente de Horizon Perfums. Te ayudo a explorar nuestras réplicas masculinas en presentaciones de 100, 50 y 25 ml. Confirma por WhatsApp el precio del tamaño elegido y las opciones de entrega."},"secciones":["banner","catalogo","beneficios","recomendados","top","duelo","horarios"],"personalizado":{"css":"","secciones":[]}}</script>
+<script type="application/json" id="harvys-rutas">{"hp1":"img/valentino-born-in-roma-uz8qwu.jpg","hp2":"img/jean-paul-gaultier-le-male-elixir-rp2nf6.jpg","hp3":"img/jean-paul-gaultier-le-beau-parfum-ttid4x.jpg","hp4":"img/dior-sauvage-elixir-0q98ro.jpg","hp5":"img/afnan-9-pm-57entm.jpg","hp6":"img/carolina-herrera-212-vip-men-fssdka.jpg","hp7":"img/king-barara-qrayrx.jpg","hp8":"img/odyssey-mandarin-sky-su869p.jpg","hp9":"img/louis-vuitton-homme-nomade-z8h6bl.jpg","hp10":"img/khamrah-de-lattafa-nwb6rp.jpg"}</script>
+<script src="script.js"></script>
+</body>
+</html>
